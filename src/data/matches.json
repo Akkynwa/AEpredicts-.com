@@ -1,0 +1,22 @@
+{
+  "league": {
+    "name": "OtherLeagues",
+    "flag": "https://flagcdn.com/w20/gb.png",
+    "matches": [
+      {
+        "time": "04:30",
+        "home": "Leeds",
+        "away": "Everton",
+        "h2h": [0, 0, 0, 0, 0, 0],
+        "form": ["D", "D", "D", "D", "D", "D"],
+        "odds": {
+          "main": [2.25, 3.40, 3.20],
+          "double": [1.36, 1.30, 1.62]
+        },
+        "tip": "1x",
+        "stat": { "home": "23%", "away": "77%" },
+        "ou": "un3.5"
+      }
+    ]
+  }
+}
