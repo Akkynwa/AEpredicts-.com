@@ -4,6 +4,7 @@ import { Clock, Trophy, BarChart, Lightning, GraphUp, Dice5 } from "react-bootst
 
 const API_PUBLISHED = "http://localhost:5000/bundesliga";
 const API_DRAFTS = "http://localhost:5000/drafts";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const DEFAULT_MATCH = {
   date: "",         // YYYY-MM-DD
@@ -33,7 +34,7 @@ export default function BundesligaAdmin() {
   const fetchAll = async () => {
     try {
       setLoading(true);
-      const [pubRes, draftRes] = await Promise.all([fetch(API_PUBLISHED), fetch(API_DRAFTS)]);
+      const [pubRes, draftRes] = await Promise.all([fetch( API_URL), fetch(API_DRAFTS)]);
       const pubData = await pubRes.json();
       const draftData = await draftRes.json();
       setPublished(Array.isArray(pubData) ? pubData : []);
@@ -120,7 +121,7 @@ const handleSaveDraft = async (e) => {
     setSaving(true);
     try {
       const payload = normalizeForSave(form);
-      const res = await fetch(API_PUBLISHED, {
+      const res = await fetch( API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -140,7 +141,7 @@ const handleSaveDraft = async (e) => {
     try {
       // send to published
       const payload = normalizeForSave(draft);
-      const pubRes = await fetch(API_PUBLISHED, {
+      const pubRes = await fetch( API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -165,7 +166,7 @@ const handleSaveDraft = async (e) => {
 
   const deletePublished = async (id) => {
     if (!window.confirm("Delete this published match?")) return;
-    await fetch(`${API_PUBLISHED}/${id}`, { method: "DELETE" });
+    await fetch(`${ API_URL}/${id}`, { method: "DELETE" });
     await fetchAll();
   };
 
