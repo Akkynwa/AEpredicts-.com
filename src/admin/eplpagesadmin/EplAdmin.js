@@ -226,7 +226,6 @@ export default function EpleagueAdmin() {
     ],
     []
   );
-  const mobileVisible = ["Time", "Fixture", "Tip", "O/U"];
 
   return (
     <Container className="py-4">
@@ -404,16 +403,7 @@ export default function EpleagueAdmin() {
             <Card.Body>
               {/* header row */}
               <Row className="text-center fw-bold mb-2" style={{ fontSize: "0.85rem", borderBottom: "1px solid #eee" }}>
-                {[
-                  { label: "Time", icon: <Clock /> },
-                  { label: "Fixture", icon: <Trophy /> },
-                  { label: "H2H", icon: <BarChart /> },
-                  { label: "Form", icon: <GraphUp /> },
-                  { label: "Odds", icon: <Dice5 /> },
-                  { label: "Tip", icon: <Lightning /> },
-                  { label: "Stat", icon: <BarChart /> },
-                  { label: "O/U", icon: <GraphUp /> },
-                ].map((h, i) => (
+                {headers.map((h, i) => (
                   <Col
                     xs={["Time", "Fixture", "Tip", "O/U"].includes(h.label) ? 3 : 0}
                     md={i === 1 ? 2 : 1}
