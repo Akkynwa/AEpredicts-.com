@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "./CartContext";
 
-const API = "http://localhost:5000/other";
+const API = "http://localhost:5000/others";
 
 const OtherMatchCard = () => {
   const [matches, setMatches] = useState([]);
