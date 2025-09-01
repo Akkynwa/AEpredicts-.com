@@ -231,7 +231,6 @@ const handleSaveDraft = async (e) => {
     ],
     []
   );
-  const mobileVisible = ["Time", "Fixture", "Tip", "O/U"];
 
   return (
     <Container className="py-4">
