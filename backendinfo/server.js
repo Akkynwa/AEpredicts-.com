@@ -6,13 +6,10 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
-// Middleware
+// Middleware - FIXED THE CORS ORIGIN
 app.use(cors({
-  origin: ['https://https://aepredicxt.netlify.app/', 'http://localhost:5173'] // Allow both Netlify AND your local dev server
-  // You can also use a function or just origin: "*" for testing (but avoid "*" in production long-term)
+  origin: ['https://aepredicxt.netlify.app', 'http://localhost:3000'] // Fixed: Removed extra "https://" and trailing slash. Changed port to 3000.
 }));
-app.use(cors());
 app.use(express.json());
 
 // ---------------- Paths ----------------
