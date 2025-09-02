@@ -16,11 +16,10 @@ const AdminLogin = () => {
     });
 
     const data = await res.json();
-
-    if (data.success) {
-      localStorage.setItem("token", data.token);
-      navigate("/admin/dashboard");
-    } else {
+if (data.success) {
+  localStorage.setItem("isAdmin", "true"); // Store a simple flag
+  navigate("/admin/dashboard");
+} else {
       setError("Invalid username or password");
     }
   };
