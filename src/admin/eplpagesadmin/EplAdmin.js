@@ -2,23 +2,24 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, Badge, Button, Form } from "react-bootstrap";
 import { Clock, Trophy, BarChart, Lightning, GraphUp, Dice5 } from "react-bootstrap-icons";
 
-const API_PUBLISHED = "http://localhost:5000/epl";
-const API_DRAFTS = "http://localhost:5000/drafts";
+const API_BASE = process.env.REACT_APP_API_URL;
+const API_PUBLISHED = `${API_BASE}/epl`;
+const API_DRAFTS = `${API_BASE}/drafts`;
 
 const DEFAULT_MATCH = {
-  date: "",         // YYYY-MM-DD
-  time: "",         // HH:mm
+  date: "",
+  time: "",
   home: "",
   away: "",
   h2h: ["", "", "", "", "", ""],
-  form: ["", "", "", "", "", ""],         // e.g. W/D/L
+  form: ["", "", "", "", "", ""],
   odds: { main: ["", "", ""], double: ["", "", ""] },
   tip: "",
-  stat: { home: "", away: "" },           // percentages like "45%"
-  ou: "",                                  // e.g. "un3.5"
+  stat: { home: "", away: "" },
+  ou: "",
 };
 
-export default function EpleagueAdmin() {
+export default function EplAdmin() {
   const [form, setForm] = useState(DEFAULT_MATCH);
   const [drafts, setDrafts] = useState([]);
   const [published, setPublished] = useState([]);

@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, Badge, Button, Form } from "react-bootstrap";
 import { Clock, Trophy, BarChart, Lightning, GraphUp, Dice5 } from "react-bootstrap-icons";
 
-const API_PUBLISHED = "http://localhost:5000/laliga";
-const API_DRAFTS = "http://localhost:5000/drafts";
+// FIXED: Use environment variable instead of hardcoded localhost
+const API_BASE = process.env.REACT_APP_API_URL;
+const API_PUBLISHED = `${API_BASE}/laliga`;
+const API_DRAFTS = `${API_BASE}/drafts`;
 
 const DEFAULT_MATCH = {
   date: "",         // YYYY-MM-DD

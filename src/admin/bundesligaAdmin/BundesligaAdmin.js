@@ -2,24 +2,25 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, Badge, Button, Form } from "react-bootstrap";
 import { Clock, Trophy, BarChart, Lightning, GraphUp, Dice5 } from "react-bootstrap-icons";
 
-const API_PUBLISHED = "http://localhost:5000/bundesliga";
-const API_DRAFTS = "http://localhost:5000/drafts";
-const API_URL = process.env.REACT_APP_API_URL;
+const API_BASE = process.env.REACT_APP_API_URL;
+const API_PUBLISHED = `${API_BASE}/bundesliga`;
+const API_DRAFTS = `${API_BASE}/drafts`;
 
 const DEFAULT_MATCH = {
-  date: "",         // YYYY-MM-DD
-  time: "",         // HH:mm
+  date: "",
+  time: "",
   home: "",
   away: "",
   h2h: ["", "", "", "", "", ""],
-  form: ["", "", "", "", "", ""],         // e.g. W/D/L
+  form: ["", "", "", "", "", ""],
   odds: { main: ["", "", ""], double: ["", "", ""] },
   tip: "",
-  stat: { home: "", away: "" },           // percentages like "45%"
-  ou: "",                                  // e.g. "un3.5"
+  stat: { home: "", away: "" },
+  ou: "",
 };
 
 export default function BundesligaAdmin() {
+
   const [form, setForm] = useState(DEFAULT_MATCH);
   const [drafts, setDrafts] = useState([]);
   const [published, setPublished] = useState([]);
@@ -34,7 +35,7 @@ export default function BundesligaAdmin() {
   const fetchAll = async () => {
     try {
       setLoading(true);
-      const [pubRes, draftRes] = await Promise.all([fetch( API_URL), fetch(API_DRAFTS)]);
+      const [pubRes, draftRes] = await Promise.all([fetch(API_PUBLISHED), fetch(API_DRAFTS)]);
       const pubData = await pubRes.json();
       const draftData = await draftRes.json();
       setPublished(Array.isArray(pubData) ? pubData : []);
@@ -121,7 +122,7 @@ const handleSaveDraft = async (e) => {
     setSaving(true);
     try {
       const payload = normalizeForSave(form);
-      const res = await fetch( API_URL, {
+      const res = await fetch(API_PUBLISHED, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -141,7 +142,7 @@ const handleSaveDraft = async (e) => {
     try {
       // send to published
       const payload = normalizeForSave(draft);
-      const pubRes = await fetch( API_URL, {
+      const pubRes = await fetch(API_PUBLISHED, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -166,7 +167,7 @@ const handleSaveDraft = async (e) => {
 
   const deletePublished = async (id) => {
     if (!window.confirm("Delete this published match?")) return;
-    await fetch(`${ API_URL}/${id}`, { method: "DELETE" });
+    await fetch(`${API_PUBLISHED}/${id}`, { method: "DELETE" });
     await fetchAll();
   };
 
