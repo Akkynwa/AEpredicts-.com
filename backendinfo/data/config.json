@@ -1,7 +1,6 @@
 {
   "admin": {
     "username": "admin",
-    "password": "12345",
-    "token": "secure-token-123"
+    "password": "12345"
   }
 }
