@@ -10,8 +10,7 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "./CartContext";
 
-const API = "http://localhost:5000/seriea";
-
+const API =`${process.env.REACT_APP_API_URL}/seriea`;
 const SerieAMatchCard = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);

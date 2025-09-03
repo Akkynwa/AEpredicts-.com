@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "./CartContext";
 
-const API = "http://localhost:5000/laliga";
+const API = `${process.env.REACT_APP_API_URL}/laliga`;
 
 const LaligaMatchCard = () => {
   const [matches, setMatches] = useState([]);

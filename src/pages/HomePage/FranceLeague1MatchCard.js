@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "./CartContext";
 
-const API = "http://localhost:5000/league1";
+const API = `${process.env.REACT_APP_API_URL}/league1`;;
 
 const FranceLeague1MatchCard = () => {
   const [matches, setMatches] = useState([]);
