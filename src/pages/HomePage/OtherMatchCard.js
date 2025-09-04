@@ -17,38 +17,32 @@ const OtherMatchCard = () => {
   const [loading, setLoading] = useState(true);
     const { addPick } = useCart();
   
+  // Fetch matches from backend
   const fetchMatches = () => {
-  setLoading(true);
-  fetch(API)
-    .then((res) => {
-      // First, check what type of content we're getting
-      console.log("Content-Type:", res.headers.get("content-type"));
-      
-      // Read the response as text first to see what it is
-      return res.text().then(text => {
-        console.log("Raw response:", text);
-        
-        // If it looks like JSON, try to parse it
-        if (res.headers.get("content-type")?.includes("application/json")) {
-          return JSON.parse(text);
+    setLoading(true);
+    fetch(API)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setMatches(data);
+        } else if (Array.isArray(data.others)) {
+          setMatches(data.others);
         } else {
-          throw new Error("Server returned HTML instead of JSON: " + text.substring(0, 100));
+          setMatches([]);
         }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching matches:", err);
+        setMatches([]);
+        setLoading(false);
       });
-    })
-    .then((data) => {
-      // ... rest of your code
-    })
-    .catch((err) => {
-      console.error("Full error details:", err);
-      setMatches([]);
-      setLoading(false);
-    });
-};
+  };
 
   useEffect(() => {
     fetchMatches();
   }, []);
+
 
   // Table Headers
   const headers = [

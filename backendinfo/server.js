@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 // ---------------- Paths ----------------
-const dataDir = path.join(__dirname, "../data");
+const dataDir = path.join(__dirname, "data");
 const configPath = path.join(dataDir, "config.json");
 
 // Each league has its own JSON file
