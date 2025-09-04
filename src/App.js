@@ -6,7 +6,6 @@ import HomePage from "./pages/HomePage/HomePage";
 import Footer from "./components/Footer";
 import { CartProvider } from "./pages/HomePage/CartContext";
 import BetSlip from "./components/BetSlip";
-import WinningPredictions from "./pages/HomePage/WinningPredictions";
 import Admin from "./admin/Admin";
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
@@ -38,7 +37,6 @@ const App = () => {
         <Route path="/admin/others" element={<OthersAdmin />} />
 
          {/* Public routes */}
-        <Route path="/" element={<WinningPredictions />} />
 
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
