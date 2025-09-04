@@ -5,12 +5,14 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Middleware - FIXED THE CORS ORIGIN
+// In your server.js, update the CORS configuration:
 app.use(cors({
-  origin: ['https://aepredicxt.netlify.app', 'http://localhost:3000'] // Fixed: Removed extra "https://" and trailing slash. Changed port to 3000.
+  origin: [
+    'https://aepredicxt.netlify.app', // Your production frontend
+    'http://localhost:3000',           // Your local development
+    'http://localhost:5000'            // Your local backend (if needed)
+  ]
 }));
-app.use(express.json());
 
 // ---------------- Paths ----------------
 const dataDir = path.join(__dirname, "../data");
