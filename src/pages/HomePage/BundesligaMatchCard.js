@@ -10,39 +10,57 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "./CartContext";
 
-const API = `${process.env.REACT_APP_API_URL}/bundesliga`;
 
 const BundesligaMatchCard = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
-    const { addPick } = useCart();
-  
+  const { addPick } = useCart();
+
+  // Construct the API URL using the environment variable
+  // No trailing slash here, it will be added in the fetch call
+  const API_BASE_URL = process.env.REACT_APP_API_URL; 
+
   // Fetch matches from backend
   const fetchMatches = () => {
     setLoading(true);
-    fetch(API)
-      .then((res) => res.json())
+    // Use the base URL and append the league path
+    fetch(`${API_BASE_URL}/bundesliga`) 
+      .then((res) => {
+        if (!res.ok) {
+          // If response is not ok, try to get error message from response body
+          return res.text().then(text => { throw new Error(`HTTP error! status: ${res.status}, message: ${text}`) });
+        }
+        return res.json();
+      })
       .then((data) => {
+        // Your backend returns an array directly for the league endpoint
         if (Array.isArray(data)) {
           setMatches(data);
-        } else if (Array.isArray(data.bundesliga)) {
-          setMatches(data.bundesliga);
         } else {
-          setMatches([]);
+          // Handle cases where the response is not an array (e.g., an error object)
+          console.error("Received unexpected data format:", data);
+          setMatches([]); 
         }
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching matches:", err);
-        setMatches([]);
+        setMatches([]); // Clear matches on error
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    fetchMatches();
-  }, []);
+    // Ensure the API URL is set before fetching
+    if (API_BASE_URL) {
+      fetchMatches();
+    } else {
+      console.error("REACT_APP_API_URL environment variable is not set.");
+      setLoading(false); // Stop loading if URL is missing
+    }
+  }, [API_BASE_URL]); // Re-run if API_BASE_URL changes
 
+  // ... (rest of your component code remains the same)
   // Table Headers
   const headers = [
       { label: "Time", icon: <Clock />, xs: 3, md: 1 },
@@ -75,13 +93,13 @@ const BundesligaMatchCard = () => {
           {/* League Header */}
           <Card.Header
             style={{
-              background: "linear-gradient(180deg, #DA291C, #8B0000)",              
+              background: "linear-gradient(180deg, #DA291C, #8B0000)",               
               color: "white",
               fontWeight: "bold",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-        padding: "1.9rem 1rem",
+            padding: "1.9rem 1rem",
 
             }}
           >
@@ -89,8 +107,8 @@ const BundesligaMatchCard = () => {
               <img
                 src="https://flagcdn.com/w20/de.png"
                 alt="flag"
-                style={{ width: "24px", height: "16px" }}
-              />
+                  style={{ width: "24px", height: "16px" }}
+                />
               German Bundesliga
             </div>
             <Badge bg="dark">{matches.length} Matches</Badge>
@@ -104,11 +122,11 @@ const BundesligaMatchCard = () => {
             >
               {headers.map((h, i) => (
                 <Col
-                                key={i}
-                                xs={h.xs > 0 ? h.xs : undefined}
-                                md={h.md}
-                                className={h.xs === 0 ? "d-none d-md-block" : ""}
-                              >
+                    key={i}
+                    xs={h.xs > 0 ? h.xs : undefined}
+                    md={h.md}
+                    className={h.xs === 0 ? "d-none d-md-block" : ""}
+                  >
                   {h.icon} {h.label}
                 </Col>
               ))}
